@@ -8,18 +8,18 @@ import {
 } from "sequelize";
 import sequelize from "@lib/config/sequelize";
 
-interface EmployeeModel
+export interface EmployeeModel
   extends Model<
     InferAttributes<EmployeeModel>,
     InferCreationAttributes<EmployeeModel>
   > {
-  id: string;
+  id: CreationOptional<string>;
   firstName: string;
   lastName: string;
   salary: number;
   createdAt?: CreationOptional<Date>;
   updatedAt?: CreationOptional<Date>;
-  deletedAt?: CreationOptional<Date>;
+  deletedAt?: CreationOptional<Date> | null;
 }
 
 const employee = sequelize.define<EmployeeModel>(
