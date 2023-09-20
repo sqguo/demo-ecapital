@@ -1,5 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import 'module-alias/register';
+import routes from "./routes";
 
 dotenv.config();
 
@@ -9,6 +11,8 @@ const port = process.env.PORT;
 app.get("/", (req: Request, res: Response) => {
   res.send("Server is running");
 });
+
+app.use(routes);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
