@@ -53,6 +53,33 @@ async function updateEmployee(req: Request, res: Response) {
   }
 }
 
+async function bulkUpdateEmployees(req: Request, res: Response) {
+  try {
+    // TODO: enforce API type contract
+    const updates = req.body.updates ?? [];
+    if (!updates || _.some(updates, ({ id }) => _.isNil(id))) {
+      return res.status(400).send("Employee ID is required");
+    }
+    if (updates.length === 0) {
+      return res.status(304);
+    }
+
+    const updatedEmployees = await Promise.all(
+      updates.map((update: any) =>
+        EmployeeRepo.updateEmployee(
+          update.id,
+          _.pick(update, ["firstName", "lastName", "salary"])
+        )
+      )
+    );
+
+    return res.status(200).send({ employees: updatedEmployees });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send();
+  }
+}
+
 async function createEmployee(req: Request, res: Response) {
   try {
     // TODO: enforce API type contract
@@ -67,16 +94,16 @@ async function createEmployee(req: Request, res: Response) {
   }
 }
 
-async function bulkCreateEmployee(req: Request, res: Response) {
+async function bulkCreateEmployees(req: Request, res: Response) {
   try {
     // TODO: enforce API type contract
     const employeesToCreate = req.body.attributes ?? {};
-    const newEmployee = await EmployeeRepo.createEmployee(
+    const newEmployees = await EmployeeRepo.createEmployee(
       employeesToCreate.map((toCreate: any) =>
         _.pick(toCreate, ["firstName", "lastName", "salary"])
       )
     );
-    return res.status(200).send({ employee: newEmployee });
+    return res.status(200).send({ employees: newEmployees });
   } catch (e) {
     console.log(e);
     return res.status(500).send();
@@ -98,13 +125,33 @@ async function deleteEmployee(req: Request, res: Response) {
   }
 }
 
+async function bulkDeleteEmployees(req: Request, res: Response) {
+  try {
+    // TODO: enforce API type contract
+    const { ids } = req.body;
+    if (!ids) {
+      return res.status(400).send("Employee ID is required");
+    }
+    if (ids.length === 0) {
+      return res.status(304);
+    }
+    await EmployeeRepo.bulkDeleteEmployees(ids);
+    return res.status(200);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send();
+  }
+}
+
 const EmployeeController = {
   getEmployee,
   getEmployeesPaginated,
   createEmployee,
-  bulkCreateEmployee,
+  bulkCreateEmployees,
   updateEmployee,
+  bulkUpdateEmployees,
   deleteEmployee,
+  bulkDeleteEmployees,
 };
 
 export default EmployeeController;

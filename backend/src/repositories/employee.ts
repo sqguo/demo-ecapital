@@ -110,6 +110,19 @@ async function deleteEmployee(id: string) {
   }
 }
 
+/**
+ * Soft delete the employee matching the given IDs.
+ * @param ids the UUIDs of the employees
+ */
+async function bulkDeleteEmployees(ids: string[]) {
+  try {
+    await Employee.destroy({ where: { id: { [Op.in]: ids } } });
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
 const EmployeeRepo = {
   getEmployee,
   getEmployees,
@@ -117,6 +130,7 @@ const EmployeeRepo = {
   bulkCreateEmployees,
   updateEmployee,
   deleteEmployee,
+  bulkDeleteEmployees,
 };
 
 export default EmployeeRepo;
