@@ -4,6 +4,7 @@ import EmployeeService from "../api/employee";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { useMemo } from "react";
+import { Employee } from "../type";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -19,6 +20,7 @@ function useEmployee() {
     updates: (Partial<Employee> & { id: string })[]
   ) => {
     const idToUpdateMap = _.keyBy(updates, "id");
+    if (updates.length === 0) return;
     try {
       await mutate(EmployeeService.bulkUpdateEmployee(updates), {
         rollbackOnError: true,
@@ -42,6 +44,7 @@ function useEmployee() {
 
   const handleDeleteEmployees = async (ids: string[]) => {
     const idsToDelete = new Set(ids);
+    if (ids.length === 0) return;
     try {
       await mutate(EmployeeService.bulkDeleteEmployee(ids), {
         rollbackOnError: true,
@@ -61,6 +64,7 @@ function useEmployee() {
   const handleCreateEmployees = async (
     attributes: Pick<Employee, "firstName" | "lastName" | "salary">[]
   ) => {
+    if (attributes.length === 0) return;
     try {
       const now = new Date();
       await mutate(EmployeeService.bulkCreateEmployee(attributes), {

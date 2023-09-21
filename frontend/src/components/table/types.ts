@@ -5,11 +5,17 @@ export enum CellValueState {
   Unchanged = "unchanged",
 }
 
-export type CellValueType = string | number | null | undefined;
+export enum CellValueType {
+  Numeric = "numeric",
+  Text = "text",
+}
+
+export type CellValue = string | number | null | undefined;
 
 export interface CellState {
   state: CellValueState;
-  value: CellValueType;
+  value: CellValue;
+  type: CellValueType;
   valueFormatter?: () => string;
   onChange?: (value: any) => void;
 }

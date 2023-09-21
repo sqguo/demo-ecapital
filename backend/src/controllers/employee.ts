@@ -98,6 +98,9 @@ async function bulkCreateEmployees(req: Request, res: Response) {
   try {
     // TODO: enforce API type contract
     const employeesToCreate = req.body.attributes ?? {};
+    if (employeesToCreate.length === 0) {
+      return res.status(304);
+    }
     const newEmployees = await EmployeeRepo.createEmployee(
       employeesToCreate.map((toCreate: any) =>
         _.pick(toCreate, ["firstName", "lastName", "salary"])

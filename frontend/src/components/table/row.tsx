@@ -10,8 +10,8 @@ function Row(props: RowProps) {
   const { rowState } = props;
   return (
     <tr>
-      {rowState.cells.map((cellState) => (
-        <Cell key={rowState.id} state={cellState} />
+      {rowState.cells.map((cellState, idx) => (
+        <Cell key={rowState.id + idx} state={cellState} />
       ))}
     </tr>
   );
