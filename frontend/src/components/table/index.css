@@ -27,3 +27,15 @@ tbody > tr:first-child > td {
 td .MuiTextField-root:has(input:not(:focus)) fieldset {
   border: none;
 }
+
+td[data-cell-state="modified"] {
+  background-color: yellow;
+}
+
+td[data-cell-state="added"] {
+  background-color: green;
+}
+
+td[data-cell-state="deleted"] {
+  background-color: red;
+}
