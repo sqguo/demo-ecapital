@@ -1,4 +1,4 @@
-interface Employee {
+export interface Employee {
   // TODO: branded type for UUID
   id: string;
   firstName: string;
@@ -8,4 +8,10 @@ interface Employee {
   createdAt: Date | string;
   updatedAt: Date | string;
   deletedAt: Date | string | null;
+}
+
+export enum EmployeeTableColumn {
+  FirstName = "firstName",
+  LastName = "lastName",
+  Salary = "salary",
 }

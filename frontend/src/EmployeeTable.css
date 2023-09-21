@@ -1,0 +1,15 @@
+.employee-table {
+  width: fit-content;
+  height: fit-content;
+  padding: 12px;
+  background-color: aliceblue;
+  border-radius: 6px;
+}
+
+.employee-table-controls {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 12px;
+}

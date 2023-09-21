@@ -1,0 +1,29 @@
+table {
+  position: relative;
+  border-collapse: collapse;
+}
+
+thead > tr:first-child {
+  border-bottom: 2px solid;
+}
+
+th,
+td {
+  min-width: 120px;
+  min-height: 48px;
+  padding: 6px 12px;
+  text-align: left;
+}
+
+th {
+  padding-left: 24px;
+  padding-bottom: 24px;
+}
+
+tbody > tr:first-child > td {
+  padding-top: 12px;
+}
+
+td .MuiTextField-root:has(input:not(:focus)) fieldset {
+  border: none;
+}

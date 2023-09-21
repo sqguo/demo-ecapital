@@ -3,6 +3,7 @@ import API from "../api/constants";
 import EmployeeService from "../api/employee";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { useMemo } from "react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -11,7 +12,8 @@ function useEmployee() {
     API.EMPLOYEE,
     fetcher
   );
-  const employees = data?.employees ?? [];
+  const employees = useMemo(() => data?.employees ?? [], [data]);
+  const idToEmployeeMap = useMemo(() => _.keyBy(employees, "id"), [employees]);
 
   const handleUpdateEmployees = async (
     updates: (Partial<Employee> & { id: string })[]
@@ -83,6 +85,7 @@ function useEmployee() {
 
   return {
     employees,
+    idToEmployeeMap,
     error,
     isLoading,
     handleCreateEmployees,
