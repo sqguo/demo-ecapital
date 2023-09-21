@@ -6,10 +6,11 @@ import "./index.css";
 interface TableProps {
   columnNames: string[];
   rows: RowState[];
+  onDeleteRow: (id: string) => void;
 }
 
 function Table(props: TableProps) {
-  const { rows, columnNames } = props;
+  const { rows, columnNames, onDeleteRow } = props;
   return (
     <table>
       <thead>
@@ -21,7 +22,11 @@ function Table(props: TableProps) {
       </thead>
       <tbody>
         {rows.map((row) => (
-          <Row key={row.id} rowState={row} />
+          <Row
+            key={row.id}
+            rowState={row}
+            onDelete={() => onDeleteRow(row.id)}
+          />
         ))}
       </tbody>
     </table>

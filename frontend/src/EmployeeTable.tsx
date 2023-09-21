@@ -130,6 +130,14 @@ function EmployeeTable() {
     }));
   };
 
+  const onDeleteRow = (id: string) => {
+    setRowsToDelete((rows) => {
+      const toDelete = new Set(rows);
+      toDelete.add(id);
+      return toDelete;
+    });
+  };
+
   const onResetChanges = () => {
     setRowsToCreate({});
     setRowsToDelete(new Set());
@@ -213,6 +221,7 @@ function EmployeeTable() {
           (key) => EmployeeTableColumnNames[key]
         )}
         rows={tableRows}
+        onDeleteRow={onDeleteRow}
       />
     </div>
   );

@@ -51,7 +51,7 @@ function useEmployee() {
         revalidate: true,
         optimisticData: (data) => {
           const updatedEmployees = (data?.employees ?? []).map((employee) =>
-            idsToDelete.has(employee.id) ? employee : null
+            !idsToDelete.has(employee.id) ? employee : null
           );
           return { employees: _.compact(updatedEmployees) };
         },
