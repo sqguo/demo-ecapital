@@ -101,7 +101,7 @@ async function bulkCreateEmployees(req: Request, res: Response) {
     if (employeesToCreate.length === 0) {
       return res.status(304);
     }
-    const newEmployees = await EmployeeRepo.createEmployee(
+    const newEmployees = await EmployeeRepo.bulkCreateEmployees(
       employeesToCreate.map((toCreate: any) =>
         _.pick(toCreate, ["firstName", "lastName", "salary"])
       )
